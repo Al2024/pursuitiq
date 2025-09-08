@@ -6,10 +6,10 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const fileId = params.id;
+    const fileId = context.params.id;
     const buffer = await firebaseStorage.getFileBuffer(fileId);
     if (!buffer) return NextResponse.json({ error: 'File not found' }, { status: 404 });
     const meta = await firebaseStorage.getFileMetadata(fileId);
