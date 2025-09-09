@@ -7,7 +7,7 @@ const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
 // Private key may contain escaped newlines when set in env; fix them
 const privateKey = (process.env.FIREBASE_PRIVATE_KEY || '').replace(/\\n/g, '\n');
 // Prefer explicit bucket; otherwise derive from project id
-const storageBucket = process.env.FIREBASE_STORAGE_BUCKET || (projectId ? `${projectId}.appspot.com` : undefined);
+const storageBucket = process.env.FIREBASE_STORAGE_BUCKET;
 
 // In local dev, auto-wire the Storage emulator if available and not already set
 if (process.env.NODE_ENV !== 'production') {
@@ -21,7 +21,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 if (!admin.apps.length) {
-  if (projectId && clientEmail && privateKey) {
+  if (projectId && clientEmail && privateKey && storageBucket) {
     admin.initializeApp({
       credential: admin.credential.cert({
         projectId,
@@ -31,11 +31,12 @@ if (!admin.apps.length) {
       storageBucket,
     });
   } else {
-    // Initialize without credentials so the module can load in local dev
-    // Admin features will be inactive until creds are provided
+    // Initialize without credentials for local dev if env vars are missing
+    // This allows the app to run, but Firebase features will fail
+    console.warn("Firebase Admin credentials not found. Initializing with defaults. Some features may not work.");
     admin.initializeApp({
       projectId: projectId || undefined,
-      storageBucket,
+      storageBucket: storageBucket || undefined,
     });
   }
 }
