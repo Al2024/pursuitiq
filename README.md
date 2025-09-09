@@ -98,6 +98,35 @@ Ideas:
 * Implement retry / backoff and JSON schema validation.
 * UI for history & filtering by risk level.
 
+### Model Stability & Deterministic Confidence (Planned Enhancements)
+Goals: reduce variance between runs on identical documents and make confidence auditable.
+
+Planned techniques:
+1. Low-temperature generation:
+    * Use `generationConfig: { temperature: 0.1, topP: 0.9, topK: 40 }` for more consistent outputs.
+2. Deterministic confidence calculation:
+    * Have model ONLY extract raw fields (risks array, dates present/missing, disciplines) and compute confidence server-side with a formula, e.g.:  
+      `confidence = clamp(100 - (riskCount * 7) - (missingDateCount * 10), 0, 100)`
+3. Two-pass pipeline:
+    * Pass 1: extraction (strict schema).  
+    * Pass 2: post-processing & scoring (pure TypeScript, deterministic).
+4. JSON schema enforcement:
+    * Validate model JSON against a zod schema; if invalid, request a repair or fallback to structured extraction prompt.
+5. Consensus / retry guard:
+    * If first response invalid or confidence out-of-bounds, retry once at same low temperature; optionally average structured metrics instead of trusting outlier scores.
+6. Caching by document hash:
+    * Compute SHA256 of file bytes; if prior analysis exists, reuse it to prevent drift and reduce token costs.
+7. Evidence-linked rationale:
+    * Prompt model to cite page numbers / sections; future enhancement: highlight spans using model-provided anchors.
+8. Guardrail overrides:
+    * If model confidence < 15 or > 98 but objective risk/date metrics disagree, recompute using deterministic formula.
+9. Structured confidence explanation:
+    * Ask model (or compute) a breakdown object: `{ base: 100, riskPenalty: X, datePenalty: Y, final: Z }` for transparency.
+10. Optional multi-model check:
+    * Run a cheaper model for a quick extraction sanity check; only escalate to larger model if discrepancies exceed a threshold.
+
+Status: Not yet implemented; prioritized next once baseline user flow is stable.
+
 ## Security Notes
 * Service account key lives only in Vercel env vars, not committed.
 * Do not expose Gemini key to client; all analysis is server-side.
