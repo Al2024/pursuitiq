@@ -37,6 +37,15 @@ async function extractTextFromFile(file: File): Promise<{ text: string; buffer: 
 
 export async function POST(request: NextRequest) {
   try {
+    // --- BEGIN VERCEL DEBUGGING ---
+    console.log('--- Vercel Environment Variable Check ---');
+    console.log(`FIREBASE_PROJECT_ID is set: ${!!process.env.FIREBASE_PROJECT_ID}`);
+    console.log(`FIREBASE_CLIENT_EMAIL is set: ${!!process.env.FIREBASE_CLIENT_EMAIL}`);
+    console.log(`FIREBASE_STORAGE_BUCKET is set: ${!!process.env.FIREBASE_STORAGE_BUCKET}`);
+    console.log(`FIREBASE_PRIVATE_KEY is set: ${!!process.env.FIREBASE_PRIVATE_KEY}`);
+    console.log(`GOOGLE_AI_API_KEY is set: ${!!process.env.GOOGLE_AI_API_KEY}`);
+    console.log('--- End Vercel Environment Variable Check ---');
+    // --- END VERCEL DEBUGGING ---
     console.log('API Route: /api/analyze - POST request received');
 
     const formData = await request.formData();
