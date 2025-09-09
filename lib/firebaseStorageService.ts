@@ -29,13 +29,24 @@ class FirebaseStorageService {
     const buffer = Buffer.from(arrayBuffer);
 
     const gcsFile = this.bucket.file(objectPath);
-    await gcsFile.save(buffer, {
-      resumable: false,
-      contentType: file.type || 'application/octet-stream',
-      metadata: {
-        metadata: { originalName: file.name },
-      },
-    });
+    try {
+      await gcsFile.save(buffer, {
+        resumable: false,
+        contentType: file.type || 'application/octet-stream',
+        metadata: {
+          metadata: { originalName: file.name },
+        },
+      });
+    } catch (err: any) {
+      // Enhance 404 (bucket not found) clarity for production debugging
+      const bucketName = this.bucket?.name;
+      const code = err?.code;
+      if (code === 404) {
+        err.message = `${err.message} (Bucket: '${bucketName}'). This usually means the Firebase Storage bucket was never created or the env var FIREBASE_STORAGE_BUCKET='${bucketName}' is wrong. Login to Firebase Console > Storage and click 'Get started' to provision the default bucket (normally <project-id>.appspot.com). Ensure the service account has Storage Object Admin (or Editor) role.`;
+      }
+      console.error('Firebase Storage upload failed', { bucketName, objectPath, code, originalError: err?.message });
+      throw err;
+    }
 
     // Prefer serving through our API for consistency
     const meta: FileMetadata = {
