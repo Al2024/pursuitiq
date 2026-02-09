@@ -2,11 +2,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-export const metadata = {
-  title: 'Personality Fit Explorer | InfrabuildAI',
-  description: 'Lightweight construction pursuit team personality snapshot.'
-};
-
 interface Question {
   id: string;
   text: string;
