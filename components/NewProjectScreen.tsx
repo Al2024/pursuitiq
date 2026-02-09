@@ -9,6 +9,25 @@ export default function NewProjectScreen() {
   const [analysisResults, setAnalysisResults] = useState<any>(null);
   const [fileMetadata, setFileMetadata] = useState<any>(null);
 
+  const formatRisk = (risk: unknown) => {
+    if (typeof risk === 'string') {
+      return risk;
+    }
+    if (risk && typeof risk === 'object') {
+      const riskObj = risk as { category?: string; description?: string };
+      if (riskObj.category && riskObj.description) {
+        return `${riskObj.category}: ${riskObj.description}`;
+      }
+      if (riskObj.description) {
+        return riskObj.description;
+      }
+      if (riskObj.category) {
+        return riskObj.category;
+      }
+    }
+    return 'Uncategorized risk';
+  };
+
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -277,9 +296,9 @@ export default function NewProjectScreen() {
             <div className="glass-card rounded-2xl p-6 shadow-2xl shadow-black/30 border border-slate-800/80">
               <h3 className="text-lg font-semibold text-white mb-4">Identified Risks</h3>
               <div className="space-y-2">
-                {analysisResults.risks.map((risk: string, index: number) => (
+                {analysisResults.risks.map((risk: unknown, index: number) => (
                   <div key={index} className="flex items-center justify-between p-3 bg-rose-500/10 border border-rose-500/20 rounded-lg">
-                    <span className="text-slate-100">{risk}</span>
+                    <span className="text-slate-100">{formatRisk(risk)}</span>
                     <button className="text-brand-300 hover:text-brand-200">
                       <Edit3 className="w-4 h-4" />
                     </button>
