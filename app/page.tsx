@@ -7,48 +7,51 @@ export const metadata = {
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex flex-col">
-      <section className="flex-1 flex flex-col items-center justify-center px-6 text-center max-w-5xl mx-auto w-full">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 mb-6">
-          InfrabuildAI Product Suite
-        </h1>
-        <p className="text-lg sm:text-xl text-gray-600 leading-relaxed mb-10 max-w-3xl mx-auto">
-          Lightweight AI tools for infrastructure & construction pursuit teams. Accelerate strategic clarity,
-          reduce manual triage time, and improve bid discipline.
-        </p>
-        <div className="grid gap-6 w-full sm:grid-cols-2">
-          <div className="group relative bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition flex flex-col">
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">PursuitIQ</h2>
-            <p className="text-sm text-gray-600 mb-4 flex-1">Upload RFPs → extract disciplines, dates, risks & get a structured go / no-go recommendation.</p>
-            <Link href="/analyze" className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition">
-              Launch Analyzer
-            </Link>
-          </div>
-          <div className="group relative bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition flex flex-col">
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">Personality Fit Explorer</h2>
-            <p className="text-sm text-gray-600 mb-4 flex-1">Quick self-assessment to understand dominant collaboration & risk tendencies on pursuit teams.</p>
-            <Link href="/personality" className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition">
-              Open Tool
-            </Link>
+    <main className="min-h-screen bg-dark-950 text-slate-100 relative overflow-hidden">
+      <div className="absolute inset-0 bg-grid opacity-40" />
+      <div className="absolute -top-32 left-16 h-[520px] w-[520px] rounded-full bg-brand-500/20 blur-[180px]" />
+      <div className="absolute -bottom-48 right-[-120px] h-[560px] w-[560px] rounded-full bg-pink-500/15 blur-[200px]" />
+
+      <section className="relative flex min-h-screen items-center justify-center px-6 py-40 scanline-effect">
+        <div className="absolute inset-0 opacity-60">
+          {Array.from({ length: 18 }).map((_, index) => (
+            <span
+              key={index}
+              className="absolute h-1 w-1 rounded-full bg-brand-400/70 blur-[1px]"
+              style={{
+                top: `${(index * 13) % 100}%`,
+                left: `${(index * 19) % 100}%`,
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="relative w-full max-w-md">
+          <div className="glass-card overlay-scan rounded-3xl p-8 text-center shadow-2xl shadow-black/40">
+            <div className="animate-scanline" />
+            <div className="relative space-y-6">
+              <span className="inline-flex rounded-full border border-brand-500/40 bg-brand-500/10 px-4 py-1 text-[10px] font-mono uppercase tracking-[0.4em] text-brand-200">
+                PursuitIQ
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter">
+                Precision <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-200 via-brand-400 to-pink-400 drop-shadow-[0_2px_10px_rgba(99,102,241,0.45)]">
+                  Bid Intel
+                </span>
+              </h2>
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+                Upload RFPs, extract disciplines, dates, and risk signals, then generate a structured go / no-go briefing.
+              </p>
+              <Link
+                href="/analyze"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-brand-600 text-white font-semibold uppercase tracking-[0.3em] text-xs hover:bg-brand-500 transition"
+              >
+                Launch Analyzer
+              </Link>
+            </div>
           </div>
         </div>
-        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="https://github.com/Al2024/pursuitiq"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-6 py-3 rounded-lg bg-gray-900 hover:bg-black text-white font-medium shadow-sm transition text-sm"
-          >
-            View Code (PursuitIQ)
-          </a>
-        </div>
-        <p className="mt-6 text-sm text-gray-500 max-w-md mx-auto">
-          MVP only—no authentication, documents stored securely server-side. Additional governance & auditing planned.
-        </p>
       </section>
-      <footer className="py-8 text-center text-xs text-gray-500">
-        © {new Date().getFullYear()} InfrabuildAI. Internal MVP.
-      </footer>
     </main>
   );
 }

@@ -38,29 +38,33 @@ export default function MainLayout({ children, currentProject }: MainLayoutProps
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-dark-950 text-slate-100 relative overflow-hidden">
+      <div className="absolute inset-0 bg-grid opacity-30" />
+      <div className="absolute -top-32 left-24 h-[520px] w-[520px] rounded-full bg-brand-500/20 blur-[180px]" />
+      <div className="absolute -bottom-48 right-[-140px] h-[560px] w-[560px] rounded-full bg-pink-500/15 blur-[200px]" />
+
       {/* Top Bar */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
+      <header className="relative z-20 bg-slate-950/80 backdrop-blur border-b border-slate-800 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <h1 className="text-2xl font-bold text-gray-900">PursuitIQ</h1>
+            <h1 className="text-2xl font-black tracking-tight text-white">PursuitIQ</h1>
             {currentProject && (
               <div className="flex items-center space-x-2">
-                <span className="text-gray-500">|</span>
-                <span className="text-lg font-medium text-gray-700">{currentProject}</span>
+                <span className="text-slate-500">|</span>
+                <span className="text-lg font-medium text-slate-300">{currentProject}</span>
               </div>
             )}
           </div>
-          <div className="flex items-center space-x-4">
-            <span className="text-sm text-gray-600">Welcome, Bid Manager</span>
+          <div className="flex items-center space-x-4 text-sm text-slate-400">
+            <span>Welcome, Bid Manager</span>
           </div>
         </div>
       </header>
 
-      <div className="flex">
+      <div className="flex relative z-10">
         {/* Sidebar */}
-        <aside className="w-64 bg-white border-r border-gray-200 min-h-[calc(100vh-73px)]">
-          <nav className="p-4">
+        <aside className="w-72 bg-slate-950/70 backdrop-blur border-r border-slate-800 min-h-[calc(100vh-73px)]">
+          <nav className="p-5">
             <ul className="space-y-2">
               {navigation.map((item) => {
                 const Icon = item.icon;
@@ -68,14 +72,14 @@ export default function MainLayout({ children, currentProject }: MainLayoutProps
                   <li key={item.id}>
                     <button
                       onClick={() => setActiveTab(item.id)}
-                      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors ${
+                      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left transition-all ${
                         activeTab === item.id
-                          ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                          : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                          ? 'bg-brand-500/15 text-brand-200 border border-brand-500/30 shadow-lg shadow-brand-500/10'
+                          : 'text-slate-300 hover:bg-slate-900/70 hover:text-white'
                       }`}
                     >
                       <Icon className="w-5 h-5" />
-                      <span className="font-medium">{item.label}</span>
+                      <span className="font-medium uppercase tracking-[0.1em] text-xs">{item.label}</span>
                     </button>
                   </li>
                 );
@@ -85,7 +89,7 @@ export default function MainLayout({ children, currentProject }: MainLayoutProps
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-6 md:p-10">
           {renderActiveScreen()}
         </main>
       </div>

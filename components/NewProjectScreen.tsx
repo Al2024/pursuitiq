@@ -98,47 +98,47 @@ export default function NewProjectScreen() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
+    <div className="max-w-6xl mx-auto space-y-10">
       {/* Header */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Create New Project</h2>
-        <p className="text-gray-600">Upload an RFP document and let AI analyze it for key insights</p>
+      <div className="glass-card rounded-2xl p-8 shadow-2xl shadow-black/30 border border-slate-800/80 text-center">
+        <h2 className="text-2xl font-black text-white mb-2 uppercase tracking-tight">Create New Project</h2>
+        <p className="text-slate-400">Upload an RFP document and let AI analyze it for key insights</p>
       </div>
 
       {/* Upload Section */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="glass-card rounded-2xl p-8 shadow-2xl shadow-black/30 border border-slate-800/80 text-center">
         <div className="space-y-4">
-          <div className="flex items-center space-x-3">
-            <Upload className="w-6 h-6 text-gray-500" />
-            <h3 className="text-lg font-semibold text-gray-900">Upload RFP Document</h3>
+          <div className="flex items-center justify-center space-x-3">
+            <Upload className="w-6 h-6 text-brand-300" />
+            <h3 className="text-lg font-semibold text-white">Upload RFP Document</h3>
           </div>
 
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-8">
+          <div className="border-2 border-dashed border-slate-700/70 bg-slate-950/40 rounded-2xl p-10">
             <div className="text-center">
               {uploadedFile ? (
                 <div className="space-y-4">
-                  <FileText className="w-12 h-12 text-blue-500 mx-auto" />
+                  <FileText className="w-12 h-12 text-brand-400 mx-auto" />
                   <div>
-                    <p className="text-lg font-medium text-gray-900">{uploadedFile.name}</p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-lg font-medium text-white">{uploadedFile.name}</p>
+                    <p className="text-sm text-slate-400">
                       {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB
                     </p>
                   </div>
                   <button
                     onClick={() => setUploadedFile(null)}
-                    className="text-red-600 hover:text-red-800 text-sm font-medium"
+                    className="text-rose-300 hover:text-rose-200 text-sm font-medium"
                   >
                     Remove file
                   </button>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <Upload className="w-12 h-12 text-gray-400 mx-auto" />
+                  <Upload className="w-12 h-12 text-slate-500 mx-auto" />
                   <div>
-                    <p className="text-lg font-medium text-gray-900">Drop your RFP here</p>
-                    <p className="text-gray-500">or click to browse files</p>
+                    <p className="text-lg font-medium text-slate-100">Drop your RFP here</p>
+                    <p className="text-slate-400">or click to browse files</p>
                   </div>
-                  <label className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer">
+                  <label className="inline-flex items-center px-5 py-2.5 bg-brand-600 text-white rounded-lg hover:bg-brand-500 cursor-pointer uppercase tracking-[0.2em] text-xs font-semibold">
                     <Upload className="w-4 h-4 mr-2" />
                     Choose File
                     <input
@@ -153,21 +153,21 @@ export default function NewProjectScreen() {
             </div>
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-center">
             <button
               onClick={handleAnalyze}
               disabled={!uploadedFile || isAnalyzing}
-              className="flex items-center space-x-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+              className="flex items-center space-x-2 px-6 py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-500 disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed uppercase tracking-[0.2em] text-xs font-semibold"
             >
               {isAnalyzing ? (
                 <>
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-white/70 border-t-transparent rounded-full animate-spin" />
                   <span>Analyzing...</span>
                 </>
               ) : (
                 <>
                   <Play className="w-4 h-4" />
-                  <span>Analyze Project</span>
+                    <span>Analyze Project</span>
                 </>
               )}
             </button>
@@ -180,25 +180,25 @@ export default function NewProjectScreen() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left Column - Analysis Summary */}
           <div className="space-y-6">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Analysis Summary</h3>
+            <div className="glass-card rounded-2xl p-6 shadow-2xl shadow-black/30 border border-slate-800/80">
+              <h3 className="text-lg font-semibold text-white mb-4">Analysis Summary</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Go/No-Go Recommendation</label>
+                  <label className="block text-sm font-medium text-slate-400 mb-2">Go/No-Go Recommendation</label>
                   <div className="flex items-center space-x-2">
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                    <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-[0.3em] border ${
                       analysisResults.goNoGoSuggestion === 'GO'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
+                        ? 'bg-emerald-500/15 text-emerald-200 border-emerald-500/30'
+                        : 'bg-rose-500/15 text-rose-200 border-rose-500/30'
                     }`}>
                       {analysisResults.goNoGoSuggestion}
                     </span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-slate-400">
                       {analysisResults.confidence}% confidence
                     </span>
                   </div>
                   {analysisResults.rationale && (
-                    <p className="text-sm text-gray-600 mt-2">{analysisResults.rationale}</p>
+                    <p className="text-sm text-slate-400 mt-2">{analysisResults.rationale}</p>
                   )}
                 </div>
               </div>
@@ -206,30 +206,30 @@ export default function NewProjectScreen() {
 
             {/* File Information */}
             {fileMetadata && (
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Uploaded File</h3>
+              <div className="glass-card rounded-2xl p-6 shadow-2xl shadow-black/30 border border-slate-800/80">
+                <h3 className="text-lg font-semibold text-white mb-4">Uploaded File</h3>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-700">File Name:</span>
-                    <span className="text-gray-900">{fileMetadata.originalName}</span>
+                    <span className="text-slate-400">File Name:</span>
+                    <span className="text-slate-100">{fileMetadata.originalName}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-700">Size:</span>
-                    <span className="text-gray-900">{(fileMetadata.size / 1024 / 1024).toFixed(2)} MB</span>
+                    <span className="text-slate-400">Size:</span>
+                    <span className="text-slate-100">{(fileMetadata.size / 1024 / 1024).toFixed(2)} MB</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-700">Type:</span>
-                    <span className="text-gray-900">{fileMetadata.mimeType}</span>
+                    <span className="text-slate-400">Type:</span>
+                    <span className="text-slate-100">{fileMetadata.mimeType}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-700">Uploaded:</span>
-                    <span className="text-gray-900">{new Date(fileMetadata.uploadedAt).toLocaleString()}</span>
+                    <span className="text-slate-400">Uploaded:</span>
+                    <span className="text-slate-100">{new Date(fileMetadata.uploadedAt).toLocaleString()}</span>
                   </div>
                   {fileMetadata.url && fileMetadata.url !== '#' && (
-                    <div className="pt-3 border-t border-gray-200">
+                    <div className="pt-3 border-t border-slate-800">
                       <button
                         onClick={handleDownload}
-                        className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                        className="flex items-center space-x-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-500"
                       >
                         <Download className="w-4 h-4" />
                         <span>Download File</span>
@@ -240,13 +240,13 @@ export default function NewProjectScreen() {
               </div>
             )}
 
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Required Disciplines</h3>
+            <div className="glass-card rounded-2xl p-6 shadow-2xl shadow-black/30 border border-slate-800/80">
+              <h3 className="text-lg font-semibold text-white mb-4">Required Disciplines</h3>
               <div className="space-y-2">
                 {analysisResults.disciplines.map((discipline: string, index: number) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <span className="text-gray-900">{discipline}</span>
-                    <button className="text-blue-600 hover:text-blue-800">
+                  <div key={index} className="flex items-center justify-between p-3 bg-slate-900/60 border border-slate-800/80 rounded-lg">
+                    <span className="text-slate-100">{discipline}</span>
+                    <button className="text-brand-300 hover:text-brand-200">
                       <Edit3 className="w-4 h-4" />
                     </button>
                   </div>
@@ -257,15 +257,15 @@ export default function NewProjectScreen() {
 
           {/* Right Column - Details */}
           <div className="space-y-6">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Key Dates</h3>
+            <div className="glass-card rounded-2xl p-6 shadow-2xl shadow-black/30 border border-slate-800/80">
+              <h3 className="text-lg font-semibold text-white mb-4">Key Dates</h3>
               <div className="space-y-3">
                 {Object.entries(analysisResults.dates).map(([key, value]: [string, any]) => (
                   <div key={key} className="flex items-center justify-between">
-                    <span className="text-gray-700 capitalize">{key.replace(/([A-Z])/g, ' $1')}</span>
+                    <span className="text-slate-400 capitalize">{key.replace(/([A-Z])/g, ' $1')}</span>
                     <div className="flex items-center space-x-2">
-                      <span className="text-gray-900">{value}</span>
-                      <button className="text-blue-600 hover:text-blue-800">
+                      <span className="text-slate-100">{value}</span>
+                      <button className="text-brand-300 hover:text-brand-200">
                         <Edit3 className="w-4 h-4" />
                       </button>
                     </div>
@@ -274,13 +274,13 @@ export default function NewProjectScreen() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Identified Risks</h3>
+            <div className="glass-card rounded-2xl p-6 shadow-2xl shadow-black/30 border border-slate-800/80">
+              <h3 className="text-lg font-semibold text-white mb-4">Identified Risks</h3>
               <div className="space-y-2">
                 {analysisResults.risks.map((risk: string, index: number) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-red-50 rounded-lg">
-                    <span className="text-gray-900">{risk}</span>
-                    <button className="text-blue-600 hover:text-blue-800">
+                  <div key={index} className="flex items-center justify-between p-3 bg-rose-500/10 border border-rose-500/20 rounded-lg">
+                    <span className="text-slate-100">{risk}</span>
+                    <button className="text-brand-300 hover:text-brand-200">
                       <Edit3 className="w-4 h-4" />
                     </button>
                   </div>
@@ -288,18 +288,28 @@ export default function NewProjectScreen() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="glass-card rounded-2xl p-6 shadow-2xl shadow-black/30 border border-slate-800/80">
               <div className="flex space-x-4">
-                <button className="flex-1 flex items-center justify-center space-x-2 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                <button className="flex-1 flex items-center justify-center space-x-2 px-4 py-3 bg-slate-900/70 border border-slate-700 text-slate-100 rounded-lg hover:border-brand-500/40 hover:text-white">
                   <Eye className="w-4 h-4" />
                   <span>Review & Edit</span>
                 </button>
-                <button className="flex-1 flex items-center justify-center space-x-2 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                <button className="flex-1 flex items-center justify-center space-x-2 px-4 py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-500">
                   <FileText className="w-4 h-4" />
                   <span>Export Summary</span>
                 </button>
               </div>
             </div>
+
+            <a
+              href="https://doc-rag-app.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass-card rounded-2xl p-6 shadow-2xl shadow-black/30 border border-slate-800/80 flex items-center justify-between hover:border-brand-500/40 transition"
+            >
+              <span className="text-sm font-semibold uppercase tracking-[0.3em] text-white">Chat with Legal</span>
+              <span className="text-brand-300">→</span>
+            </a>
           </div>
         </div>
       )}
